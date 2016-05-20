@@ -1,0 +1,39 @@
+<form>
+  <div class="form-group">
+    <label>Search</label>
+    <input type="text" #box (keyup.enter)="search(box.value)" class="form-control" autofocus>
+  </div>
+</form>
+
+<app-loading *ngIf="loadingResults && !results"></app-loading>
+
+<p *ngIf="results && !results.length">No results found.</p>
+<div *ngFor="#user of results">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        {{user.person.first_name ? user.person.first_name[0].value : ''}}
+        {{user.person.last_name ? user.person.last_name[0].value : ''}}
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="masonry">
+        <div *ngFor="#key of keys">
+          <div class="item" *ngIf="keyHasValue(user.person, key)">
+            <dl>
+              <dt>{{key.name}}</dt>
+              <dd *ngFor="#value of user.person[key.id]" style="margin-top:4px;">
+                <span style="white-space: pre;">{{key.field ? key.field(value) : value.value}}</span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!--<pre>{{user.person | json}}</pre>-->
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-default pull-right" *ngIf="meta.next_page" (click)="search(box.value, meta.page + 1)">Next Page</button>
+<p *ngIf="meta.page">Page: {{meta.page}}</p>
