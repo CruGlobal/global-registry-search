@@ -2,7 +2,7 @@
 
 ## Local Setup
 
-Install Angular CLI (https://github.com/angular/angular-cli)
+Install Angular CLI (https://github.com/angular/angular-cli) ```npm install -g angular-cli```
 
 From the project root, run ```ng serve```
 
